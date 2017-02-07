@@ -11,7 +11,7 @@ residential = "_res"
 headers = {'User-Agent': 'Mozilla/5.0'}
 payload = {
     'choose_your_uility': 'clp',
-    'account_type': commericial,
+    'account_type': commercial,
     'type': 'clp_res',
     'submit': 'COMPARE NOW'
 
