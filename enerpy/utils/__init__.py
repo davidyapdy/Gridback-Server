@@ -9,6 +9,4 @@ Module containing utility and some primary functionality of the Enerpy backend.
 :github: @seanpianka
 
 """
-from enerpy.utils import scrape
-
-
+from enerpy.utils.energizect import get_prices
