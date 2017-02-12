@@ -1,13 +1,15 @@
-import json
+"""
+api
+~~~
 
-from enerpy import app
-from enerpy.utils import energizect
+API definition for Enerpy backend.
 
+:author: Sean Pianka
+:e-mail: pianka@eml.cc
+:github: @seanpianka
 
-@app.route('/')
-def index():
-    """
+"""
 
-    :return: JSON dump representation of the company data.
-    """
-    return json.dumps(energizect.get_prices())
+from enerpy.api import (
+    company_data
+)
