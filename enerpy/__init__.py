@@ -21,6 +21,6 @@ app.config.from_object('config')
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
-from energy import (
+from enerpy import (
     api,
 )
