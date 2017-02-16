@@ -90,3 +90,5 @@ ENV/
 # Rope project settings
 .ropeproject
 config.py
+# no reason to change this across separate hosts
+run.py

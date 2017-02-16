@@ -1,11 +1,25 @@
+"""
+models
+~~~~~~
+
+:author: Sean Pianka
+:e-mail: pianka@eml.cc
+:github: @seanpianka
+
+"""
+import datetime
+
+from sqlalchemy.dialects.mysql import INTEGER, DECIMAL, VARCHAR, MEDIUMTEXT, DATETIME
+
 from enerpy import db
 
 
 class Person(db.Model):
-    firstname = db.Column()
-    lastname = db.Column()
-    join_date = db.Column()
-    email = db.Column()
+    id = db.Column(INTEGER(unsigned=True), primary_key=True, autoincrement=True, nullable=False)
+    firstname = db.Column(VARCHAR(40), nullable=False)
+    lastname = db.Column(VARCHAR(40), nullable=False)
+    join_date = db.Column(DATETIME, nullable=False, default=datetime.datetime.utcnow)
+    email = db.Column(VARCHAR(254), nullable=False)
     selected_company_id = db.Column()
 
 
