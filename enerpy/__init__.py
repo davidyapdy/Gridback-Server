@@ -31,9 +31,10 @@ def before_request():
         raise InvalidRequestError("Invalid app token provided.")
 
 
-
 from enerpy import (
     api,
     utils,
     exceptions,
+    models
 )
+

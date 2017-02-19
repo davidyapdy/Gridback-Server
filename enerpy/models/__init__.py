@@ -22,16 +22,22 @@ class Person(db.Model):
     email            = db.Column(VARCHAR(254), nullable=False)
     provider         = db.Column(INTEGER(unsigned=True), db.ForeignKey('Company.id'))
 
+    def as_dict(self):
+        return {c.name:getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Company(db.Model):
     id           = db.Column(INTEGER(unsigned=True), primary_key=True, autoincrement=True, nullable=False)
     name         = db.Column(VARCHAR(512), nullable=False)
     phone_number = db.Column(VARCHAR(64))
-    cycle        = db.Column(INTEGER())
-    supply_rate  = db.Column()
-    type         = db.Column()
-    renewable    = db.Column()
-    img          = db.Column()
-    enrollment   = db.Column()
-    cancellation = db.Column()
+    cycle        = db.Column(INTEGER(), nullable=False)
+    supply_rate  = db.Column(INTEGER(), nullable=False)
+    type         = db.Column(VARCHAR(32), nullable=False)
+    renewable    = db.Column(INTEGER(), nullable=False)
+    img          = db.Column(VARCHAR(1024))
+    enrollment   = db.Column(VARCHAR(256))
+    cancellation = db.Column(VARCHAR(256))
     customers    = db.relationship('Customers', backref="provider", cascade="all, delete-orphan", lazy='dynamic')
+
+    def as_dict(self):
+        return {c.name:getattr(self, c.name) for c in self.__table__.columns}

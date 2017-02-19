@@ -9,7 +9,7 @@ company_data
 """
 import json
 
-from enerpy import app
+from enerpy import app, db, models
 from enerpy.utils import energizect
 
 
@@ -19,5 +19,10 @@ def prices():
 
     :return: JSON dump representation of the company data.
     """
-    return json.dumps(energizect.get_prices())
+    companies = models.Company.query.all()
+
+    if not companies:
+        companies = energizect.get_prices()
+
+    return json.dumps(companies)
 
