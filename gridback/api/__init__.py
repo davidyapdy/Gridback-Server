@@ -10,6 +10,6 @@ API definition for Enerpy backend.
 
 """
 
-from enerpy.api import (
+from gridback.api import (
     company_data
 )

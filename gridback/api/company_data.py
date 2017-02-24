@@ -9,8 +9,8 @@ company_data
 """
 import json
 
-from enerpy import app, db, models
-from enerpy.utils import energizect
+from gridback import app, db, models
+from gridback.utils import energizect
 
 
 @app.route('/prices/')

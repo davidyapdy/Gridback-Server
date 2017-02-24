@@ -14,7 +14,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 from config import ENERPY_APP_TOKEN, BASE_DIR
-from enerpy.exceptions import InvalidRequestError
+from gridback.exceptions import InvalidRequestError
 
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def before_request():
         raise InvalidRequestError("Invalid app token provided.")
 
 
-from enerpy import (
+from gridback import (
     api,
     utils,
     exceptions,

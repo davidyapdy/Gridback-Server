@@ -9,7 +9,7 @@ accounts
 """
 from flask import request
 
-from enerpy import app, db
+from gridback import app, db
 
 
 @app.route('/add_account/')
