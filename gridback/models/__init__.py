@@ -32,7 +32,7 @@ class Person(db.Model):
     email         = db.Column(VARCHAR(254), nullable=False)
     provider      = db.Column(INTEGER(unsigned=True),
                               db.ForeignKey('Company.id'))
-    contract_id   = db.Column()
+    contract_id   = db.Column(INTEGER(unsigned=True), )
     contract      = db.Column()
 
     def as_dict(self):
