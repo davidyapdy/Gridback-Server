@@ -16,7 +16,9 @@ from sqlalchemy.dialects.mysql import (
 from gridback import db
 
 
+################# REMOVE IN PRODUCTION #################
 db.drop_all()
+################# REMOVE IN PRODUCTION #################
 
 
 class Person(db.Model):
@@ -52,6 +54,9 @@ class Provider(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+# https://stackoverflow.com/questions/12344664/how-to-add-object-to-many-to-one-relationship-in-sqlalchemy
+
+
 class Contract(db.Model):
     __tablename__ = 'contract'
     id            = db.Column(INTEGER(unsigned=True), primary_key=True)
@@ -73,4 +78,6 @@ class Contract(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+################# REMOVE IN PRODUCTION #################
 db.create_all()
+################# REMOVE IN PRODUCTION #################
