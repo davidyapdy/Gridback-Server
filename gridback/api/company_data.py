@@ -19,10 +19,10 @@ def prices():
 
     :return: JSON dump representation of the company data.
     """
-    companies = models.Company.query.all()
+    providers = models.Provider.query.all()
 
-    if not companies:
-        companies = energizect.get_prices()
+    if not providers:
+        providers = energizect.get_prices()
 
-    return json.dumps(companies)
+    return json.dumps(providers)
 

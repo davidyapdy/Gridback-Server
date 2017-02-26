@@ -13,7 +13,7 @@ interact with EnergizeCT's free energy pricing data.
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
-from config import ENERPY_APP_TOKEN, BASE_DIR
+from config import GRIDBACK_APP_TOKEN, BASE_DIR
 from gridback.exceptions import InvalidRequestError
 
 
@@ -27,7 +27,7 @@ def before_request():
     app_token = request.args.get('app_token')
     if not app_token:
         raise InvalidRequestError("No app token provided.")
-    elif app_token != ENERPY_APP_TOKEN:
+    elif app_token != GRIDBACK_APP_TOKEN:
         raise InvalidRequestError("Invalid app token provided.")
 
 
@@ -38,3 +38,5 @@ from gridback import (
     models
 )
 
+# backgroundscheduler.start here, seconds=1800, store energizect api call in db
+# hopefully no issues with race conditions/locking

@@ -92,3 +92,4 @@ ENV/
 config.py
 # no reason to change this across separate hosts
 run.py
+app.db
