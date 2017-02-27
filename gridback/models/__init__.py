@@ -7,7 +7,7 @@ models
 :github: @seanpianka
 
 """
-import datetime
+from datetime import datetime
 
 from sqlalchemy.dialects.mysql import (
     INTEGER, DECIMAL, VARCHAR, MEDIUMTEXT, DATETIME
@@ -16,16 +16,10 @@ from sqlalchemy.dialects.mysql import (
 from gridback import db
 
 
-################# REMOVE IN PRODUCTION #################
-db.drop_all()
-################# REMOVE IN PRODUCTION #################
-
-
 class Person(db.Model):
     __tablename__ = 'person'
     id            = db.Column(INTEGER(unsigned=True), primary_key=True)
-    joined        = db.Column(DATETIME, nullable=False,
-                              default=datetime.datetime.utcnow)
+    joined        = db.Column(DATETIME, nullable=False, default=datetime.utcnow)
     email         = db.Column(VARCHAR(254), nullable=False)
 
     # one-one: person <--> contract
@@ -42,7 +36,7 @@ class Provider(db.Model):
     phone_number  = db.Column(VARCHAR(64))
     cycle         = db.Column(INTEGER(), nullable=False)
     supply_rate   = db.Column(INTEGER(), nullable=False)
-    type          = db.Column(VARCHAR(32), nullable=False)
+    pricing_model = db.Column(VARCHAR(32), nullable=False)
     renewable     = db.Column(INTEGER(), nullable=False)
     img           = db.Column(VARCHAR(1024))
     enrollment    = db.Column(VARCHAR(256))
@@ -52,9 +46,6 @@ class Provider(db.Model):
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-# https://stackoverflow.com/questions/12344664/how-to-add-object-to-many-to-one-relationship-in-sqlalchemy
 
 
 class Contract(db.Model):
@@ -76,8 +67,3 @@ class Contract(db.Model):
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-################# REMOVE IN PRODUCTION #################
-db.create_all()
-################# REMOVE IN PRODUCTION #################

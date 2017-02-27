@@ -9,4 +9,4 @@ Module containing utility and some primary functionality of the Enerpy backend.
 :github: @seanpianka
 
 """
-from gridback.utils.energizect import get_prices
+from gridback.utils.prices import energizect

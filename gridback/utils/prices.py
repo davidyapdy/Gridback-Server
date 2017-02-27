@@ -14,10 +14,9 @@ the JSON serialization format.
 import requests
 import re
 from bs4 import BeautifulSoup as BS
-from pprint import pprint
 
 
-def get_prices():
+def energizect():
     """ Source: 1
 
     Below are the keys of the individual dictionaries which comprise the list:
@@ -45,20 +44,8 @@ def get_prices():
     }
     url = "http://www.energizect.com/compare-energy-suppliers/compare-supplier-options"
 
-    s = requests.Session()
-    res = s.post(
-        url,
-        headers=headers,
-        data=payload
-    )
-
-    soup = BS(res.content, 'lxml')
-    raw_companies = soup.find_all('tr', attrs={'id': re.compile("plan-[0-9]{5}")})
-    companies = []
-
-    for company in raw_companies:
+    def parse_company(company_row_cells):
         data = {}
-        row_cells = company.find_all("td", {'rel': True, 'class': re.compile("col_[0-9]")})
 
         for col, td in enumerate(row_cells):
             row_data = [a.strip() for a in td.get_text().splitlines() if a.strip()]
@@ -75,10 +62,17 @@ def get_prices():
                 data['renewable'] = row_data[0].split(" Renewable")[0]
             elif col == 3:
                 data['supply_rate'] = float(row_data[0][:-1])
-        companies.append(data)
+
+        return data
+
+    s = requests.Session()
+    res = s.post(url, headers=headers, data=payload)
+    soup = BS(res.content, 'lxml')
+    raw_companies = soup.find_all('tr', attrs={'id': re.compile("plan-[0-9]{5}")})
+    companies = []
+
+    for company in raw_companies:
+        row_cells = company.find_all("td", {'rel': True, 'class': re.compile("col_[0-9]")})
+        companies.append(parse_company(row_cells))
 
     return companies
-
-
-if __name__ == "__main__":
-    pprint(get_prices())
