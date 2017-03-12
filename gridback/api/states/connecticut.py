@@ -1,6 +1,6 @@
 """
-energizect
-~~~~~~~~~~
+utils/price_apis/connecticut.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Script which, using BeautifulSoup4 and LXML's HTML parser, scrapes current
 energy company prices per kilowatt-hour and displays relevant information in
@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup as BS
 
 
 def energizect():
-    """ Source: 1
+    """ Source: energizect.com
 
     Below are the keys of the individual dictionaries which comprise the list:
 
@@ -76,3 +76,7 @@ def energizect():
         companies.append(parse_company(row_cells))
 
     return companies
+
+
+if __name__ == '__main__':
+    print(energizect())

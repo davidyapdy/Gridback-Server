@@ -1,6 +1,8 @@
 """
-company_data
-~~~~~~~~~~~~
+api/providers.py
+~~~~~~~~~~~~~~~~
+
+API routes for obtaining company data.
 
 :author: Sean Pianka
 :github: @seanpianka
@@ -10,7 +12,6 @@ company_data
 import json
 
 from gridback import app, db, models
-from gridback.utils import energizect
 
 
 @app.route('/prices/')
@@ -19,10 +20,11 @@ def prices():
 
     :return: JSON dump representation of the company data.
     """
+    default_state = 'CT'
+
+
     providers = models.Provider.query.all()
 
-    if not providers:
-        providers = energizect.get_prices()
 
     return json.dumps(providers)
 

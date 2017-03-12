@@ -1,6 +1,8 @@
 """
-models
-~~~~~~
+models/__init__.py
+~~~~~~~~~~~~~~~~~~
+
+Database model definition for a Person, a Provider (energy), and a Contract.
 
 :author: Sean Pianka
 :e-mail: pianka@eml.cc
@@ -14,13 +16,15 @@ from sqlalchemy.dialects.mysql import (
 )
 
 from gridback import db
+from gridback.models.http import BaseRequest, BaseResponse
 
 
 class Person(db.Model):
     __tablename__ = 'person'
     id            = db.Column(INTEGER(unsigned=True), primary_key=True)
     joined        = db.Column(DATETIME, nullable=False, default=datetime.utcnow)
-    email         = db.Column(VARCHAR(254), nullable=False)
+    email         = db.Column(VARCHAR(254), unique=True, nullable=False)
+    state         = db.Column(VARCHAR(2), nullable=False)
 
     # one-one: person <--> contract
     contract      = db.relationship("Contract", uselist=False, back_populates="person")
@@ -28,16 +32,19 @@ class Person(db.Model):
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+    def from_email(self, email):
+        return Person.query.filter(Person.email == email).first()
+
 
 class Provider(db.Model):
     __tablename__ = 'provider'
     id            = db.Column(INTEGER(unsigned=True), primary_key=True)
-    name          = db.Column(VARCHAR(512), nullable=False)
+    name          = db.Column(VARCHAR(512))
     phone_number  = db.Column(VARCHAR(64))
-    cycle         = db.Column(INTEGER(), nullable=False)
+    cycle         = db.Column(INTEGER())
     supply_rate   = db.Column(INTEGER(), nullable=False)
-    pricing_model = db.Column(VARCHAR(32), nullable=False)
-    renewable     = db.Column(INTEGER(), nullable=False)
+    pricing_model = db.Column(VARCHAR(32))
+    renewable     = db.Column(INTEGER())
     img           = db.Column(VARCHAR(1024))
     enrollment    = db.Column(VARCHAR(256))
     cancellation  = db.Column(VARCHAR(256))
